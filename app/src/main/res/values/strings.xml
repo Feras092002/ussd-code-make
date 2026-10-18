@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">صانع كود USSD</string>
+    <string name="no_dialer">لا يوجد تطبيق اتصال على هذا الجهاز</string>
+    <string name="file_saved">تم حفظ الملف في مجلد التنزيلات</string>
+</resources>
