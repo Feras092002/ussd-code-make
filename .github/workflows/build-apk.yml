@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,10 +30,24 @@ jobs:
           gradle-version: "8.14.3"
 
       - name: Build debug APK
-        run: gradle --no-daemon assembleDebug
+        run: |
+          gradle --no-daemon assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ussd-code-maker.apk
 
-      - name: Upload APK
+      - name: Upload APK (Actions artifact)
         uses: actions/upload-artifact@v4
         with:
           name: ussd-code-maker-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: ussd-code-maker.apk
+
+      # يُنشر الملف أيضاً كإصدار (Release) ليكون له رابط تنزيل مباشر وثابت
+      - name: Publish APK as GitHub Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: USSD Code Maker — build ${{ github.run_number }}
+          body: |
+            نسخة Android من صانع كود USSD (commit ${{ github.sha }}).
+            حمّل ملف ussd-code-maker.apk وثبّته على الهاتف.
+          files: ussd-code-maker.apk
