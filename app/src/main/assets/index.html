@@ -2855,7 +2855,7 @@
 
             if (selectedWallet === 'jawwal') {
                 if (pinVal) {
-                    el.innerHTML = `*110*${typeDigit}*${'•'.repeat(pinVal.length)}*${phone}*${amount}#`;
+                    el.innerHTML = `*110*${typeDigit}*${'•'.repeat(pinVal.length)}*${phone}*${amount}*1#`;
                 } else {
                     el.innerHTML = `*268*${typeDigit}*${phone}*${amount}#`;
                 }
@@ -3112,7 +3112,7 @@
             const typeDigit = isMerchantPayment ? '2' : '1';
             const ussd = selectedWallet === 'jawwal'
                 ? (hasPin
-                    ? `*110*${typeDigit}*${pin}*${phone}*${amount}#`
+                    ? `*110*${typeDigit}*${pin}*${phone}*${amount}*1#`
                     : `*268*${typeDigit}*${phone}*${amount}#`)
                 : isMerchantPayment
                     ? `*370*2*${phone}*${amount}#`
